@@ -4,6 +4,6 @@ module.exports = {
   entry: './src/client/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'my-first-webpack.bundle.js'
+    filename: 'build.bundle.js'
   }
 };
