@@ -1,12 +1,15 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const devMode = process.env.NODE_ENV !== 'production';
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: './src/client/index.js',
+  devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'build.bundle.js'
+    filename: '[name].bundle.js'
   },
   devServer: {
     contentBase: './dist'
@@ -15,7 +18,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader'
         }
@@ -23,21 +26,24 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-            // fallback to style-loader in development
-            process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
-            'css-loader',
-            'sass-loader',
-            'resolve-url-loader'
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+          'resolve-url-loader'
         ]
-    }
+      }
     ]
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "index.css"
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
     }),
     new HtmlWebpackPlugin({
       template: './src/client/index.html'
-    })
+    }),
+    new CleanWebpackPlugin(['dist'], {
+      verbose: true
+    }),
   ]
 };
