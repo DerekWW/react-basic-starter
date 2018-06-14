@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
 const PORT = process.env.PORT
 const app = express()
+const api = require('./src/server/router')
 
 app.use(bodyParser.json())
 app.use(cookieParser())
@@ -16,16 +17,18 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'))
 }
 
-//Serve our react app when the user goes to any url that does route to the proxy at /api
+//expose all other server routes behind /api
+app.use('/api', api)
+
+//Serve our react app when the user goes to any url that does not route to the proxy routes at /api
 app.get('*', (req, res, next) => {
   res.sendFile(path.join(__dirname + '/dist/index.html'));
 })
 
 //error handler
 app.use(function (err, req, res, next) {
-  let { err, statusCode, message } = err;
   console.error(err)
-  res.status(statusCode).send(message)
+  res.send(err)
 })
 
 
