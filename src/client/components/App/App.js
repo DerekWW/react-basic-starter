@@ -1,11 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './App.scss';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './App.scss'
 
 export default class App extends React.Component {
-
-
-  render() {
+  render () {
     return (
       <div>
         <h1>Welcome to Bsdfasasic React Starter</h1>
@@ -14,4 +12,3 @@ export default class App extends React.Component {
     )
   }
 }
-

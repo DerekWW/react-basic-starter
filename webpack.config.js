@@ -1,9 +1,9 @@
-const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const devMode = process.env.NODE_ENV !== 'production';
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const webpack = require('webpack');
+const path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const devMode = process.env.NODE_ENV !== 'production'
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/client/index.js',
@@ -50,4 +50,4 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]
-};
+}
