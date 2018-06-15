@@ -13,8 +13,10 @@ app.use(cookieParser())
 
 app.use(express.static(path.join(__dirname, '/dist')));
 
-if (process.env.NODE_ENV !== 'production') {
-  app.use(morgan('dev'))
+if (app.get('env') === 'production') {
+  app.use(morgan('combined'));
+} else {
+  app.use(morgan('dev'));
 }
 
 //expose all other server routes behind /api
