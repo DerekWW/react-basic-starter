@@ -1,11 +1,14 @@
 const router = require('express').Router()
-const fs = require('fs');
+const fs = require('fs')
 
-// TODO dynamically load in all route files
-
-const pokemon = require('./routes/pokemon')
-
-router.use('/pokemon', pokemon)
+/*
+dynamically load in all the routers in the routes file
+*/
+var routePath = '/routes'
+fs.readdirSync(__dirname + routePath).forEach(file => {
+  let route = `.${routePath}/${file}`
+  router.use(require(route))
+});
 
 //catch any api requests that fail to match to an api route
 router.use('*', (req, res, next) => {
@@ -15,4 +18,4 @@ router.use('*', (req, res, next) => {
   })
 })
 
-module.exports = router;
+module.exports = router
